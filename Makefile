@@ -1,0 +1,56 @@
+NAME := segv.iso
+
+CC := i686-elf-gcc
+
+SEGV_BIN := isodir/boot/segv.bin
+SEGV_GRUB_CFG := isodir/boot/grub/grub.cfg
+
+SEGV_ISO_SOURCES := $(SEGV_BIN)
+
+SEGV_BIN_C_SOURCES := bootstrap/kernel.c
+SEGV_BIN_ASM_SOURCES := bootstrap/boot.s
+
+SEGV_BIN_OBJECTS := $(SEGV_BIN_C_SOURCES:%.c=%.o)
+SEGV_BIN_OBJECTS += $(SEGV_BIN_ASM_SOURCES:%.s=%.o)
+
+SEGV_BIN_DEPENDS := $(SEGV_BIN_OBJECTS:%.o=%.d)
+
+all: $(NAME)
+
+$(NAME): $(SEGV_BIN) $(SEGV_GRUB_CFG)
+	grub-mkrescue -o $@ isodir
+
+$(SEGV_BIN): $(SEGV_BIN_OBJECTS)
+	mkdir -p $(dir $@)
+	$(CC) -T bootstrap/linker.ld -o $@ \
+		-ffreestanding -fno-builtin -fno-stack-protector -nostdlib -nodefaultlibs \
+		-O2 -m32 $^ -lgcc
+
+$(SEGV_GRUB_CFG):
+	mkdir -p $(dir $@)
+	echo "menuentry \"segv\" {\n    multiboot /boot/segv.bin\n}" > $@
+
+%.o: %.c
+	$(CC) -Wall -Wextra -Wvla -Wshadow -Werror \
+		-ffreestanding -fno-builtin -fno-stack-protector -nostdlib -nodefaultlibs \
+		-O2 -m32 -std=gnu99 -c -MMD -I. -o $@ $<
+
+%.o: %.s
+	nasm -felf32 -MF $(subst .o,.d,$@) -o $@ $<
+
+-include $(SEGV_BIN_DEPENDS)
+
+clean:
+	rm -rf isodir
+	rm -f $(SEGV_BIN_OBJECTS)
+	rm -f $(SEGV_BIN_DEPENDS)
+
+fclean:
+	$(MAKE) clean
+	rm -f $(NAME)
+
+re:
+	$(MAKE) fclean
+	+$(MAKE) all
+
+.PHONY: all clean fclean re
