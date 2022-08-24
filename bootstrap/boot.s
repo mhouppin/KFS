@@ -39,7 +39,7 @@ stack_top:
 ; Declare _start as a function symbol with the given symbol size.
 section .text
     extern kernel_main
-    global _start: function (_start.end - _start)
+    global _start:function (_start.end - _start)
 
 _start:
     ; The bootloader has loaded us into 32-bit protected mode on a x86
