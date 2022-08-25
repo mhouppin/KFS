@@ -8,9 +8,22 @@ SEGV_GRUB_CFG := isodir/boot/grub/grub.cfg
 SEGV_ISO_SOURCES := $(SEGV_BIN)
 
 KLIB_C_SOURCES := \
+	klib/sources/kmemccpy.c \
+	klib/sources/kmemchr.c \
+	klib/sources/kmemcmp.c \
 	klib/sources/kmemcpy.c \
+	klib/sources/kmemmove.c \
 	klib/sources/kmemset.c \
+	klib/sources/kstrcat.c \
+	klib/sources/kstrchr.c \
+	klib/sources/kstrchrnul.c \
+	klib/sources/kstrcpy.c \
+	klib/sources/kstrlcat.c \
 	klib/sources/kstrlen.c \
+	klib/sources/kstrncat.c \
+	klib/sources/kstrncpy.c \
+	klib/sources/kstrnlen.c \
+	klib/sources/kstrrchr.c \
 	klib/sources/vga_init.c \
 	klib/sources/vga_setcolor.c \
 	klib/sources/vga_write.c \
