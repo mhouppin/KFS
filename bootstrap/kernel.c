@@ -17,6 +17,6 @@
 void kernel_main(void) 
 {
 	vga_init();
-	vga_writestr("Hello, World!\n\nWelcome to SegvOS v0.1.0\n\n");
+	vga_writestr("Hello, World!\n\nWelcome to VaultOS v0.1.0\n\n");
     vga_writestr("42\n");
 }

@@ -1,11 +1,11 @@
-NAME := segv.iso
+NAME := vault.iso
 
 CC := i686-elf-gcc
 
-SEGV_BIN := isodir/boot/segv.bin
-SEGV_GRUB_CFG := isodir/boot/grub/grub.cfg
+VAULT_BIN := isodir/boot/vault.bin
+VAULT_GRUB_CFG := isodir/boot/grub/grub.cfg
 
-SEGV_ISO_SOURCES := $(SEGV_BIN)
+VAULT_ISO_SOURCES := $(VAULT_BIN)
 
 KLIB_C_SOURCES := \
 	klib/sources/kmemccpy.c \
@@ -32,28 +32,28 @@ KLIB_C_SOURCES := \
 	klib/sources/vga_writebuf.c \
 	klib/sources/vga_writestr.c
 
-SEGV_BIN_C_SOURCES := bootstrap/kernel.c $(KLIB_C_SOURCES)
-SEGV_BIN_ASM_SOURCES := bootstrap/boot.s
+VAULT_BIN_C_SOURCES := bootstrap/kernel.c $(KLIB_C_SOURCES)
+VAULT_BIN_ASM_SOURCES := bootstrap/boot.s
 
-SEGV_BIN_OBJECTS := $(SEGV_BIN_C_SOURCES:%.c=%.o)
-SEGV_BIN_OBJECTS += $(SEGV_BIN_ASM_SOURCES:%.s=%.o)
+VAULT_BIN_OBJECTS := $(VAULT_BIN_C_SOURCES:%.c=%.o)
+VAULT_BIN_OBJECTS += $(VAULT_BIN_ASM_SOURCES:%.s=%.o)
 
-SEGV_BIN_DEPENDS := $(SEGV_BIN_OBJECTS:%.o=%.d)
+VAULT_BIN_DEPENDS := $(VAULT_BIN_OBJECTS:%.o=%.d)
 
 all: $(NAME)
 
-$(NAME): $(SEGV_BIN) $(SEGV_GRUB_CFG)
+$(NAME): $(VAULT_BIN) $(VAULT_GRUB_CFG)
 	grub-mkrescue -o $@ isodir
 
-$(SEGV_BIN): $(SEGV_BIN_OBJECTS)
+$(VAULT_BIN): $(VAULT_BIN_OBJECTS)
 	mkdir -p $(dir $@)
 	$(CC) -T bootstrap/linker.ld -o $@ \
 		-ffreestanding -fno-builtin -fno-stack-protector -nostdlib -nodefaultlibs \
 		-O2 -m32 $^ -lgcc
 
-$(SEGV_GRUB_CFG):
+$(VAULT_GRUB_CFG):
 	mkdir -p $(dir $@)
-	echo "menuentry \"segv\" {\n    multiboot /boot/segv.bin\n}" > $@
+	echo "menuentry \"vault\" {\n    multiboot /boot/vault.bin\n}" > $@
 
 %.o: %.c
 	$(CC) -Wall -Wextra -Wvla -Wshadow -Werror \
@@ -63,12 +63,12 @@ $(SEGV_GRUB_CFG):
 %.o: %.s
 	nasm -felf32 -MF $(subst .o,.d,$@) -o $@ $<
 
--include $(SEGV_BIN_DEPENDS)
+-include $(VAULT_BIN_DEPENDS)
 
 clean:
 	rm -rf isodir
-	rm -f $(SEGV_BIN_OBJECTS)
-	rm -f $(SEGV_BIN_DEPENDS)
+	rm -f $(VAULT_BIN_OBJECTS)
+	rm -f $(VAULT_BIN_DEPENDS)
 
 fclean:
 	$(MAKE) clean
