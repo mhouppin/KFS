@@ -7,8 +7,9 @@
 void kernel_main(void)
 {
 	vga_init();
+    printf("[LOG] Initializing GDT segments...\n");
     gdt_init();
-    printf("Hello, World!\n\nWelcome to VaultOS %d.%d.%d%s\n",
+    printf("\nHello, World!\n\nWelcome to VaultOS %d.%d.%d%s\n",
         __VAULT_MAJOR_VER,
         __VAULT_MINOR_VER,
         __VAULT_PATCH_VER,

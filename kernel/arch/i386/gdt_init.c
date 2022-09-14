@@ -1,5 +1,8 @@
 #include "gdt.h"
 
+#include <kernel/utils.h>
+#include <stdio.h>
+
 void gdt_init(void)
 {
     struct gdt_segment_desc *segments = (struct gdt_segment_desc *)0x800u;
@@ -116,6 +119,9 @@ void gdt_init(void)
       | GDT_ACCESS_EQ_RING
       | GDT_ACCESS_ACCBIT
     );
+
+    printf("\nGDT contents:\n");
+    printk(segments, 64);
 
     gdt_configure(segments, 8);
 }
