@@ -67,7 +67,7 @@ $(ARCHDIR)/crtbegin.o $(ARCHDIR)/crtend.o:
 	$(CC) -MD -c -o $@ $< -std=gnu11 $(CFLAGS) $(CPPFLAGS)
 
 %.o: %.s
-	nasm -D__is_kernel -felf32 -MF $(subst .o,.d,$@) -o $@ $<
+	nasm -g -Fdwarf -D__is_kernel -felf32 -MF $(subst .o,.d,$@) -o $@ $<
 
 clean:
 	rm -f vault.kernel

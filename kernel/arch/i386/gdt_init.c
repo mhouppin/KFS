@@ -2,7 +2,7 @@
 
 void gdt_init(void)
 {
-    struct gdt_segment_desc segments[8];
+    struct gdt_segment_desc *segments = (struct gdt_segment_desc *)0x800u;
 
     // Initialize NULL descriptor.
     segment_desc_set(&segments[0],
@@ -14,8 +14,8 @@ void gdt_init(void)
 
     // Initialize Kernel Mode Code Segment descriptor.
     segment_desc_set(&segments[1],
-        0xE00000u,
-        0xFFu,
+        0x00u,
+        0xFFFFFu,
         GDT_FLAG_PAGE_GRANULAR
       | GDT_FLAG_32BIT_SEGM
       | GDT_FLAG_NO_LONG_MODE,
@@ -29,8 +29,8 @@ void gdt_init(void)
 
     // Initialize Kernel Mode Data Segment descriptor.
     segment_desc_set(&segments[2],
-        0xF00000u,
-        0x7Fu,
+        0x00u,
+        0xFFFFFu,
         GDT_FLAG_PAGE_GRANULAR
       | GDT_FLAG_32BIT_SEGM
       | GDT_FLAG_NO_LONG_MODE,
@@ -43,8 +43,8 @@ void gdt_init(void)
 
     // Initialize Kernel Mode Stack Segment descriptor.
     segment_desc_set(&segments[3],
-        0xF80000u,
-        0x7Fu,
+        0x00u,
+        0xFFFFFu,
         GDT_FLAG_PAGE_GRANULAR
       | GDT_FLAG_32BIT_SEGM
       | GDT_FLAG_NO_LONG_MODE,
@@ -58,8 +58,8 @@ void gdt_init(void)
 
     // Initialize User Mode Code Segment descriptor.
     segment_desc_set(&segments[4],
-        0x200000u,
-        0x1FFu,
+        0x00u,
+        0xFFFFFu,
         GDT_FLAG_PAGE_GRANULAR
       | GDT_FLAG_32BIT_SEGM
       | GDT_FLAG_NO_LONG_MODE,
@@ -73,8 +73,8 @@ void gdt_init(void)
 
     // Initialize User Mode Data Segment descriptor.
     segment_desc_set(&segments[5],
-        0x400000u,
-        0x3FFu,
+        0x00u,
+        0xFFFFFu,
         GDT_FLAG_PAGE_GRANULAR
       | GDT_FLAG_32BIT_SEGM
       | GDT_FLAG_NO_LONG_MODE,
@@ -87,8 +87,8 @@ void gdt_init(void)
 
     // Initialize User Mode Stack Segment descriptor.
     segment_desc_set(&segments[6],
-        0x800000u,
-        0x3FFu,
+        0x00u,
+        0xFFFFFu,
         GDT_FLAG_PAGE_GRANULAR
       | GDT_FLAG_32BIT_SEGM
       | GDT_FLAG_NO_LONG_MODE,
