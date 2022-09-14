@@ -39,6 +39,7 @@ void gdt_init(void)
       | GDT_ACCESS_CODE_SEGM
       | GDT_ACCESS_NOEXEC
       | GDT_ACCESS_DIR_UP
+      | GDT_ACCESS_WRITEABLE
     );
 
     // Initialize Kernel Mode Stack Segment descriptor.
@@ -83,6 +84,7 @@ void gdt_init(void)
       | GDT_ACCESS_CODE_SEGM
       | GDT_ACCESS_NOEXEC
       | GDT_ACCESS_DIR_UP
+      | GDT_ACCESS_WRITEABLE
     );
 
     // Initialize User Mode Stack Segment descriptor.
