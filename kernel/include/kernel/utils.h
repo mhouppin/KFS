@@ -3,6 +3,6 @@
 
 #include <stddef.h>
 
-void printk(const void *addr, size_t size);
+void kprint_memory(const void *addr, size_t size);
 
 #endif

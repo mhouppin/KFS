@@ -31,7 +31,7 @@ LIBS := $(LIBS) $(KERNEL_ARCH_LIBS)
 
 KERNEL_OBJECTS = \
 	$(KERNEL_ARCH_OBJECTS) \
-	utils/printk.o \
+	utils/kprint_memory.o \
 	kernel/kernel.o
 
 OBJECTS = \

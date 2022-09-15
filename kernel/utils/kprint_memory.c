@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-static void printk_leading_addr(uintptr_t addr)
+static void kprint_leading_addr(uintptr_t addr)
 {
     unsigned char buffer[11];
 
@@ -23,7 +23,7 @@ static void printk_leading_addr(uintptr_t addr)
     printf("%s ", (char *)buffer);
 }
 
-static void printk_range(uintptr_t addr, size_t start, size_t end)
+static void kprint_range(uintptr_t addr, size_t start, size_t end)
 {
     unsigned char buffer[57];
 
@@ -47,30 +47,30 @@ static void printk_range(uintptr_t addr, size_t start, size_t end)
     printf("%s\n", (char *)buffer);
 }
 
-void printk(const void *addr, size_t size)
+void kprint_memory(const void *addr, size_t size)
 {
     uintptr_t ptr = (uintptr_t)addr;
     uintptr_t align = ptr & ~(uintptr_t)0xFu;
 
-    printk_leading_addr(align);
+    kprint_leading_addr(align);
 
     if (ptr + size < align + 16)
     {
-        printk_range(align, ptr - align, ptr + size - align);
+        kprint_range(align, ptr - align, ptr + size - align);
         return ;
     }
 
-    printk_range(align, ptr - align, 16);
+    kprint_range(align, ptr - align, 16);
     size -= 16 - (ptr - align);
     ptr = align + 16;
 
     while (size)
     {
-        printk_leading_addr(ptr);
+        kprint_leading_addr(ptr);
 
         size_t end = (size > 16) ? 16 : size;
 
-        printk_range(ptr, 0, end);
+        kprint_range(ptr, 0, end);
         ptr += 16;
         size -= end;
     }

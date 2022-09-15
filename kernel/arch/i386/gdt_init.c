@@ -121,7 +121,7 @@ void gdt_init(void)
     );
 
     printf("\nGDT contents:\n");
-    printk(segments, 64);
+    kprint_memory(segments, 64);
 
     gdt_configure(segments, 8);
 }
