@@ -2,16 +2,17 @@ include build-aux/hostarch.mk
 
 ARCH ?= $(HOSTARCH)
 
-SRCARCH := $(ARCH)
+SRC_ARCH := $(ARCH)
 
 ifeq ($(ARCH),i386)
-	SRCARCH := x86
+	SRC_ARCH := x86
 endif
 ifeq ($(ARCH),x86_64)
-	SRCARCH := x86
+	SRC_ARCH := x86
 endif
 
-include arch/$(SRCARCH)/config.mk
+# Necessary to also recover the SRC_SUBARCH folder
+include arch/$(SRC_ARCH)/config.mk
 
 # Additional code in case the LLVM installation has a prefix or suffix
 ifneq ($(LLVM),)
@@ -63,7 +64,7 @@ else
 	STRIP   := $(CROSS_TOOLCHAIN_PREFIX)strip
 endif
 
-export ARCH SRCARCH
+export ARCH SRC_ARCH SRC_SUBARCH
 export PREFIX EXEC_PREFIX BOOTDIR LIBDIR INCLUDEDIR
 export CROSS_TOOLCHAIN_PREFIX CFLAGS CPPFLAGS SYSROOT CPP
 export CC LD AR NM OBJCOPY OBJDUMP READELF STRIP

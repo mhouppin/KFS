@@ -1,12 +1,12 @@
 # Determine if we're building for 64-bit or 32-bit x86.
 ifeq ($(ARCH),x86)
 	ifeq ($(shell uname -m),x86_64)
-		SUBARCH := x86_64
+		SRC_SUBARCH := x86_64
 	else
-		SUBARCH := i386
+		SRC_SUBARCH := i386
 	endif
 else
-	SUBARCH := $(ARCH)
+	SRC_SUBARCH := $(ARCH)
 endif
 
 # Work around that the -elf gcc targets don't have a system include directory
@@ -19,4 +19,4 @@ endif
 
 GRUB_MULTIBOOT_CHECK := grub-file --is-x86-multiboot
 
-export SUBARCH
+export SRC_SUBARCH
