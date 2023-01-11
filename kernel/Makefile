@@ -1,4 +1,4 @@
-NAME := libcpt.a
+NAME := libkernel.a
 
 kernel_CFLAGS := $(CFLAGS) \
 	-ffreestanding -fno-builtin -fno-stack-protector \
@@ -9,9 +9,6 @@ kernel_CPPFLAGS := $(CPPFLAGS) -I include -D__is_kernel
 kernel_LDFLAGS := $(LDFLAGS)
 
 kernel_OBJECTS := kernel_main.o
-
-include arch/$(SRCARCH)/common/config.mk
-include arch/$(SRCARCH)/$(SUBARCH)/config.mk
 
 kernel_DEPENDS := $(kernel_OBJECTS:.o=.d)
 
@@ -32,3 +29,5 @@ clean:
 	rm -f $(kernel_DEPENDS)
 
 -include $(kernel_DEPENDS)
+
+.PHONY: all clean
