@@ -12,11 +12,6 @@ if [[ -z "$COMPILER" ]]; then
     COMPILER="gcc"
 fi
 
-
-# Toolchain Config
-TOOLCHAIN_DIRECTORY=$(pwd)/toolchain
-TOOLCHAIN_CONFIG=$TOOLCHAIN_DIRECTORY/config.mk
-
 # Build directory
 TOOLCHAIN_DIRECTORY=toolchain
 INSTALL_DIRECTORY=$(pwd)/$TOOLCHAIN_DIRECTORY

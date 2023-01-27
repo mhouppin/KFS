@@ -4,10 +4,10 @@
 # Stop this script if error occur
 set -e
 
+source ./build-aux/toolchain/config.sh
+
 # Get operating system name
 OS=$(uname);
-
-source ./build-aux/toolchain/config.sh
 
 # Install linux dependency
 if [ "${OS}" = "Linux" ]; then

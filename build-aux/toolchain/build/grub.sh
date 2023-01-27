@@ -3,7 +3,7 @@
 # Build directory
 GRUB_DIRECTORY="grub"
 
-pushd  $TOOLCHAIN_DIRECTORY
+pushd $TOOLCHAIN_DIRECTORY
     # Download and extract grub
     if  [ ! -d  $GRUB_DIRECTORY  ];  then 
         if [ ! -f grub-2.06.tar.xz ];  then

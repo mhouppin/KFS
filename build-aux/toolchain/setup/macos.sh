@@ -13,6 +13,11 @@ fi
 # Installing all dependencies available on brew
 brew install $TARGET-gcc xorriso qemu
 
+# Create the toolchain install directory
+if [ ! -d  $INSTALL_DIRECTORY ];  then 
+    mkdir $INSTALL_DIRECTORY
+fi
+
 # Build Grub
 source ./build-aux/toolchain/build/grub.sh
 
