@@ -5,7 +5,7 @@ GCC_DIRECTORY="gcc"
 
 pushd  $TOOLCHAIN_DIRECTORY
     # Download and extract Binutils
-    if  [ ! -d  $BINUTILS_DIRECTORY  ];  then
+    if [ ! -d  $BINUTILS_DIRECTORY  ];  then
         if [ ! -f binutils-$BINUTILS_VERSION.tar.xz ];  then
             wget https://ftp.gnu.org/gnu/binutils/binutils-$BINUTILS_VERSION.tar.xz
         fi
@@ -15,7 +15,7 @@ pushd  $TOOLCHAIN_DIRECTORY
     fi
 
     # Download GCC
-    if  [ ! -d  $GCC_DIRECTORY  ];  then
+    if [ ! -d  $GCC_DIRECTORY  ];  then
         if [ ! -f gcc-$GCC_VERSION.tar.xz ];  then
             wget https://ftp.gnu.org/gnu/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.xz
         fi

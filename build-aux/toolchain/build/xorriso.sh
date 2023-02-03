@@ -5,7 +5,7 @@ XORRISO_DIRECTORY="xorriso"
 
 pushd  $TOOLCHAIN_DIRECTORY
     # Download and extract xorriso
-    if  [ ! -d  $XORRISO_DIRECTORY  ];  then
+    if [ ! -d  $XORRISO_DIRECTORY  ];  then
         if [ ! -f xorriso-$XORRISO_VERSION.tar.gz ];  then
             wget https://ftp.gnu.org/gnu/xorriso/xorriso-$XORRISO_VERSION.tar.gz
         fi

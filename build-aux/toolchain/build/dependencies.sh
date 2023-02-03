@@ -18,14 +18,14 @@ echo "[i] - Checking dependencies..."
 # Check if all commands are installed
 for name in $CROSSTOOLCHAIN_DEPENDENCIES_TOOL;
 do
-    if [[ ! $(which "$name" 2>/dev/null) ]]; then
+    if [[ -z "$(which "$name" 2>/dev/null)" ]]; then
         echo "[!] - $name is not installed.";
         deps='true';
     fi
 done
 
 # Check befor
-if [[ ! $(which ldconfig 2>/dev/null) ]]; then 
+if [[ -z "$(which ldconfig 2>/dev/null)" ]]; then 
 do
     echo "[x] - Lib config is required to check the library install."
     exit 1

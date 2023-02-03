@@ -5,7 +5,7 @@ LLVM_DIRECTORY="llvm"
 
 pushd  $TOOLCHAIN_DIRECTORY
 
-    if  [ ! -d  $LLVM_DIRECTORY  ];  then
+    if [ ! -d  $LLVM_DIRECTORY  ];  then
         if [ ! -f llvmorg-$LLVM_VERSION.tar.gz ];  then
             wget https://github.com/llvm/llvm-project/archive/refs/tags/llvmorg-$LLVM_VERSION.tar.gz
         fi

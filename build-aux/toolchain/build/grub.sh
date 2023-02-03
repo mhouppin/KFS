@@ -5,7 +5,7 @@ GRUB_DIRECTORY="grub"
 
 pushd $TOOLCHAIN_DIRECTORY
     # Download and extract grub
-    if  [ ! -d  $GRUB_DIRECTORY  ];  then 
+    if [ ! -d  $GRUB_DIRECTORY  ];  then 
         if [ ! -f grub-2.06.tar.xz ];  then
             wget https://ftp.gnu.org/gnu/grub/grub-2.06.tar.xz
         fi
