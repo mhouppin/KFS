@@ -77,8 +77,7 @@ pushd  $TOOLCHAIN_DIRECTORY
                 --prefix=$INSTALL_DIRECTORY \
                 --disable-nls \
                 --enable-languages=c,c++ \
-                --without-headers \
-                CC=cc AR=ar LD=ld NM=nm OBJCOPY=objcopy OBJDUMP=objdump READELF=readelf STRIP=strip RANLIB=ranlib
+                --without-headers
 
             make all-gcc -j $BUILD_THREADS
             make all-target-libgcc -j $BUILD_THREADS
