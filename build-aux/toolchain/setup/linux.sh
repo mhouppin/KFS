@@ -1,7 +1,7 @@
 # Get linux distribution name
 DIS_NAME=$(lsb_release -is)
 
-if [ $DIS_NAME = "Ubuntu" ];
+if [ $DIS_NAME = "Ubuntu" -o $DIS_NAME = "Debian" ];
 then
 	echo "[i] - Installing Ubuntu software requierments."
     if [ "$COMPILER" == "llvm" ];
