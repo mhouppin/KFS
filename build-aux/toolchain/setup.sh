@@ -10,12 +10,14 @@ source ./build-aux/toolchain/config.sh
 OS=$(uname);
 
 # Install linux dependency
-if [ "${OS}" = "Linux" ]; then
+if [ "${OS}" = "Linux" ];
+then
 	source ./build-aux/toolchain/setup/linux.sh
 fi
 
 # Install macos dependency
-if [ "${OS}" = "Darwin" ]; then
+if [ "${OS}" = "Darwin" ];
+then
     source ./build-aux/toolchain/setup/macos.sh
 fi
 

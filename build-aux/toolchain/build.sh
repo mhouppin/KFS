@@ -15,7 +15,8 @@ mkdir -pv $INSTALL_DIRECTORY
 
 source ./build-aux/toolchain/build/gcc.sh
 
-if [ $COMPILER = "llvm" ]; then 
+if [ $COMPILER = "llvm" ];
+then 
     source ./build-aux/toolchain/build/llvm.sh
 fi
 

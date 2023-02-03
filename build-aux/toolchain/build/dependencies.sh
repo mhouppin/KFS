@@ -7,7 +7,8 @@ CROSSTOOLCHAIN_DEPENDENCIES_TOOL+="bison flex texindex "
 CROSSTOOLCHAIN_DEPENDENCIES_LIBS+="libgmp libmpc libmpfr "
 
 # Add llvm (optional) dependencies
-if [ "$COMPILER" == "llvm" ]; then
+if [ "$COMPILER" == "llvm" ];
+then
     CROSSTOOLCHAIN_DEPENDENCIES_TOOL+="cmake python3 pip3"
     CROSSTOOLCHAIN_DEPENDENCIES_LIBS+="libz"
 fi
@@ -18,15 +19,16 @@ echo "[i] - Checking dependencies..."
 # Check if all commands are installed
 for name in $CROSSTOOLCHAIN_DEPENDENCIES_TOOL;
 do
-    if [ -z "$(which "$name" 2>/dev/null)" ]; then
+    if [ -z "$(which "$name" 2>/dev/null)" ];
+    then
         echo "[!] - $name is not installed.";
         deps='true';
     fi
 done
 
 # Required to check the library install
-if [ -z "$(which ldconfig 2>/dev/null)" ]; then 
-do
+if [ -z "$(which ldconfig 2>/dev/null)" ];
+then
     echo "[x] - Lib config is required to check the library install."
     exit 1
 done
@@ -35,14 +37,16 @@ done
 # Check if all libraries are installed
 for name in $CROSSTOOLCHAIN_DEPENDENCIES_LIBS;
 do
-    if [ "$(ldconfig -p | grep $name)" == "" ]; then
+    if [ "$(ldconfig -p | grep $name)" == "" ];
+    then
         echo "[!] - $name is not installed.";
         deps='true';
     fi
 done
 
 
-if [ "$deps" == "true" ]; then
+if [ "$deps" == "true" ];
+then
     echo "[i] - To get more information about dependencies, you can read the documentation."
     echo "[x] - Install dependencies above and rerun this script."
     exit 1

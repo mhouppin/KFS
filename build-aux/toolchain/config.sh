@@ -1,14 +1,17 @@
 
 #Set default values
-if [ -z "$ARCH" ]; then
+if [ -z "$ARCH" ];
+then
     ARCH="i386"
 fi
 
-if [ -z "$TARGET" ]; then
+if [ -z "$TARGET" ];
+then
     TARGET="$ARCH-elf"
 fi
 
-if [ -z "$COMPILER" ]; then
+if [ -z "$COMPILER" ];
+then
     COMPILER="gcc"
 fi
 

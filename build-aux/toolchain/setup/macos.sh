@@ -1,11 +1,13 @@
 # Check if brew is install
-if [ ! "$(command -v brew)" ]; then
+if [ ! "$(command -v brew)" ];
+then
     echo "[x] - brew is required to setup toolchain Please visit https://brew.sh/"
     exit 1
 fi
 
 # Fix architecture for brew (i386 -> i686)
-if [ $ARCH = "i386" ]; then
+if [ $ARCH = "i386" ];
+then
     ARCH="i686"
     TARGET="$ARCH-elf"
 fi
