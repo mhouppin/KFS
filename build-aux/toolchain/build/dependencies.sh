@@ -24,7 +24,7 @@ do
     fi
 done
 
-# Check befor
+# Required to check the library install
 if [ -z "$(which ldconfig 2>/dev/null)" ]; then 
 do
     echo "[x] - Lib config is required to check the library install."
