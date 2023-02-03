@@ -17,7 +17,7 @@ fi
 echo "[i] - Checking dependencies..."
 
 # Check if all commands are installed
-for name in $CROSSTOOLCHAIN_DEPENDENCIES_TOOL;
+for name in $CROSSTOOLCHAIN_DEPENDENCIES_TOOL
 do
     if [ -z "$(which "$name" 2>/dev/null)" ];
     then
@@ -35,7 +35,7 @@ done
 
 
 # Check if all libraries are installed
-for name in $CROSSTOOLCHAIN_DEPENDENCIES_LIBS;
+for name in $CROSSTOOLCHAIN_DEPENDENCIES_LIBS
 do
     if [ "$(ldconfig -p | grep $name)" == "" ];
     then
