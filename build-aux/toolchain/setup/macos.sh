@@ -6,7 +6,7 @@ then
 fi
 
 # Fix architecture for brew (i386 -> i686)
-if [ $ARCH = "i386" ];
+if [ $ARCH =~ "i.86" ];
 then
     ARCH="i686"
     TARGET="$ARCH-elf"
@@ -20,6 +20,5 @@ mkdir -pv $INSTALL_DIRECTORY
 
 # Build Grub
 source ./build-aux/toolchain/build/grub.sh
-
 
 exit 0;
