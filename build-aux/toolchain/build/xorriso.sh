@@ -18,7 +18,7 @@ pushd  $TOOLCHAIN_DIRECTORY
     pushd $XORRISO_DIRECTORY
         ./configure --prefix=$INSTALL_DIRECTORY
 
-        make -j $(nproc --all)
+        make -j $BUILD_THREADS
 
         make install
         

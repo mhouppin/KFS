@@ -28,7 +28,7 @@ pushd  $TOOLCHAIN_DIRECTORY
             -DCMAKE_INSTALL_PREFIX=$INSTALL_DIRECTORY
 
         pushd build
-            make -j $(nproc --all)
+            make -j $BUILD_THREADS
 
             make install
 

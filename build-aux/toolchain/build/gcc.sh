@@ -61,7 +61,7 @@ pushd  $TOOLCHAIN_DIRECTORY
                 --disable-nls \
                 --disable-werror \
 
-            make -j $(nproc --all)
+            make -j $BUILD_THREADS
 
             make install
             make clean
@@ -80,8 +80,8 @@ pushd  $TOOLCHAIN_DIRECTORY
                 --without-headers \
                 CC=cc AR=ar LD=ld NM=nm OBJCOPY=objcopy OBJDUMP=objdump READELF=readelf STRIP=strip RANLIB=ranlib
 
-            make all-gcc -j $(nproc --all)
-            make all-target-libgcc -j $(nproc --all)
+            make all-gcc -j $BUILD_THREADS
+            make all-target-libgcc -j $BUILD_THREADS
 
             make install-gcc
             make install-target-libgcc

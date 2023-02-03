@@ -27,7 +27,7 @@ pushd $TOOLCHAIN_DIRECTORY
             # TARGET_NM=$GRUB_NM \
             # TARGET_RANLIB=$GRUB_RANLIB
 
-        make -j $(nproc --all)
+        make -j $BUILD_THREADS
 
         make install
         

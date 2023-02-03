@@ -15,6 +15,11 @@ then
     COMPILER="gcc"
 fi
 
+if [ -z "$BUILD_THREADS" ];
+then
+    BUILD_THREADS=$(nproc --all --ignore=1)
+fi
+
 # Build directory
 TOOLCHAIN_DIRECTORY=toolchain
 INSTALL_DIRECTORY=$(pwd)/$TOOLCHAIN_DIRECTORY
