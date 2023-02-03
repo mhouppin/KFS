@@ -31,8 +31,7 @@ if [ -z "$(which ldconfig 2>/dev/null)" ];
 then
     echo "[x] - Lib config is required to check the library install."
     exit 1
-done
-
+fi
 
 # Check if all libraries are installed
 for name in $CROSSTOOLCHAIN_DEPENDENCIES_LIBS
