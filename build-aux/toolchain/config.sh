@@ -22,7 +22,11 @@ fi
 
 # Build directory
 TOOLCHAIN_DIRECTORY=toolchain
-INSTALL_DIRECTORY=$(pwd)/$TOOLCHAIN_DIRECTORY
+
+if [ -z "$INSTALL_DIRECTORY" ];
+then
+    INSTALL_DIRECTORY=$(pwd)/$TOOLCHAIN_DIRECTORY
+fi
 
 # Toolchain paths
 PATH="$INSTALL_DIRECTORY/bin:$PATH"
