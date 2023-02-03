@@ -51,7 +51,7 @@ pushd  $TOOLCHAIN_DIRECTORY
    
     # Build Binutils
     pushd $BINUTILS_DIRECTORY
-        mkdir -p build
+        mkdir -pv build
 
         pushd build
             ../configure \
@@ -70,7 +70,7 @@ pushd  $TOOLCHAIN_DIRECTORY
 
     # Build GCC
     pushd $GCC_DIRECTORY
-        mkdir -p build
+        mkdir -pv build
         pushd build
             ../configure \
                 --target=$TARGET \

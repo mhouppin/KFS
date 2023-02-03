@@ -15,7 +15,7 @@ pushd  $TOOLCHAIN_DIRECTORY
     fi
 
     pushd $LLVM_DIRECTORY
-        mkdir -p build
+        mkdir -pv build
 
         cmake \
             -S llvm \

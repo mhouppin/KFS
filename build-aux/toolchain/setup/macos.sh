@@ -14,9 +14,7 @@ fi
 brew install $TARGET-gcc xorriso qemu
 
 # Create the toolchain install directory
-if [ ! -d  $INSTALL_DIRECTORY ];  then 
-    mkdir $INSTALL_DIRECTORY
-fi
+mkdir -pv $INSTALL_DIRECTORY
 
 # Build Grub
 source ./build-aux/toolchain/build/grub.sh

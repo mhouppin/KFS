@@ -11,9 +11,7 @@ source ./build-aux/toolchain/build/dependencies.sh
 source ./build-aux/toolchain/config.sh
 
 # Create the toolchain install directory
-if [ ! -d  $INSTALL_DIRECTORY ];  then 
-    mkdir $INSTALL_DIRECTORY
-fi
+mkdir -pv $INSTALL_DIRECTORY
 
 source ./build-aux/toolchain/build/gcc.sh
 
