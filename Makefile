@@ -7,27 +7,24 @@ cpt_CFLAGS := $(CFLAGS) \
 	-ffreestanding -fno-builtin -fno-stack-protector \
 	-Wall -Wextra -Wvla -Wshadow
 
-cpt_LINKER_SCRIPT := arch/$(SRC_ARCH)/$(SRC_SUBARCH)/boot/linker.ld
+cpt_LINKER_SCRIPT := boot/arch/$(SRC_ARCH)/linker.ld
 
-cpt_LDFLAGS := $(LDFLAGS) -T $(cpt_LINKER_SCRIPT) -nostdlib -nodefaultlibs -lgcc
+cpt_LDFLAGS := $(LDFLAGS) -T $(cpt_LINKER_SCRIPT) -nostdlib -nodefaultlibs # -lgcc
 
-include arch/$(SRC_ARCH)/$(SRC_SUBARCH)/boot/config.mk
+cpt_STATICLIBS := boot/libcpt_boot.a kernel/libkernel.a
 
-cpt_CFLAGS += $(boot_CFLAGS)
-cpt_CPPFLAGS += $(boot_CPPFLAGS)
-cpt_LDFLAGS += $(boot_LDFLAGS)
-cpt_OBJECTS += $(boot_OBJECTS)
+include boot/arch/$(SRC_ARCH)/config.mk
 
 all: $(NAME)
 
 # TODO: add support for clang linker configuration
 
-$(NAME): kernel/libkernel.a $(cpt_LINKER_SCRIPT) $(cpt_OBJECTS)
-	$(CC) $(cpt_CFLAGS) -o $@ $(cpt_OBJECTS) kernel/libkernel.a $(cpt_LDFLAGS)
+$(NAME): $(cpt_STATICLIBS) $(cpt_LINKER_SCRIPT)
+	$(CC) $(cpt_CFLAGS) -o $@ $(cpt_STATICLIBS) $(cpt_LDFLAGS)
 	$(GRUB_MULTIBOOT_CHECK) $@ || rm -f $@
 
-%.o: %.s
-	$(CC) $(cpt_ASFLAGS) -c -o $@ $<
+boot/libcpt_boot.a: FORCE
+	$(MAKE) -C boot
 
 kernel/libkernel.a: FORCE
 	$(MAKE) -C kernel
@@ -45,6 +42,7 @@ clean:
 	rm -f $(cpt_OBJECTS)
 	rm -rf isodir
 	rm -f $(ISONAME)
+	$(MAKE) clean -C boot
 	$(MAKE) clean -C kernel
 
 FORCE:
