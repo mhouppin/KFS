@@ -3,7 +3,7 @@
 BINUTILS_DIRECTORY="binutils"
 GCC_DIRECTORY="gcc"
 
-pushd  $TOOLCHAIN_DIRECTORY
+pushd $TOOLCHAIN_DIRECTORY
     # Download and extract Binutils
     if [ ! -d  $BINUTILS_DIRECTORY  ];  then
         if [ ! -f binutils-$BINUTILS_VERSION.tar.xz ];  then

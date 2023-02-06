@@ -3,7 +3,7 @@
 # Build directory
 LLVM_DIRECTORY="llvm"
 
-pushd  $TOOLCHAIN_DIRECTORY
+pushd $TOOLCHAIN_DIRECTORY
 
     if [ ! -d  $LLVM_DIRECTORY  ];  then
         if [ ! -f llvmorg-$LLVM_VERSION.tar.gz ];  then

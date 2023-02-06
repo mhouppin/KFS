@@ -12,7 +12,7 @@ OS=$(uname);
 # Install linux dependency
 if [ "${OS}" = "Linux" ];
 then
-	source ./build-aux/toolchain/setup/linux.sh
+    source ./build-aux/toolchain/setup/linux.sh
 fi
 
 # Install macos dependency

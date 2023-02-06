@@ -3,7 +3,7 @@ DIS_NAME=$(lsb_release -is)
 
 if [ $DIS_NAME = "Ubuntu" -o $DIS_NAME = "Debian" ];
 then
-	echo "[i] - Installing Ubuntu software requierments."
+    echo "[i] - Installing Ubuntu software requierments."
     if [ "$COMPILER" == "llvm" ];
     then
         sudo apt install -y clang lld grub2 xorriso qemu

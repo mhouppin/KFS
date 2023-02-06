@@ -3,7 +3,7 @@
 # Build directory
 XORRISO_DIRECTORY="xorriso"
 
-pushd  $TOOLCHAIN_DIRECTORY
+pushd $TOOLCHAIN_DIRECTORY
     # Download and extract xorriso
     if [ ! -d  $XORRISO_DIRECTORY  ];  then
         if [ ! -f xorriso-$XORRISO_VERSION.tar.gz ];  then
