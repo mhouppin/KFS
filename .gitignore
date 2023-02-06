@@ -1,0 +1,11 @@
+# Toolchain files
+/toolchain
+
+# Binary files
+*.iso
+*.kernel
+*.d
+*.o
+
+# ISO/system root direcory 
+sysroot
