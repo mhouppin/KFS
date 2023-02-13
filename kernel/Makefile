@@ -15,10 +15,10 @@ kernel_DEPENDS := $(kernel_OBJECTS:.o=.d)
 all: $(NAME)
 
 $(NAME): $(kernel_OBJECTS)
-	$(AR) -rc  $@ $^
+	$(AR) -rc $@ $^
 
 %.o: %.c
-	$(CC) -MD -c  -o $@ $< $(CFLAGS) $(CPPFLAGS)
+	$(CC) -MD -c -o $@ $< $(kernel_CFLAGS) $(kernel_CPPFLAGS)
 
 %.o: %.s
 	$(CC) $(kernel_ASFLAGS) -c -o $@ $<
