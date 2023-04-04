@@ -14,5 +14,19 @@ void kernel_main(void)
         __VAULT_MINOR_VER,
         __VAULT_PATCH_VER,
         __VAULT_PRERELEASE_VER);
-    printf("%d", 42);
+    printf("%d\n", 42);
+    printf("Bonus:\n");
+    for (size_t i = 0; i < 16; i++)
+    {
+        vga_setcolor(vga_entry_color(0, i));
+        printf(" ");
+    }
+    printf("\n");
+    for (size_t i = 0; i < 16; i++)
+    {
+        vga_setcolor(vga_entry_color(i, 0));
+        printf("H");
+    }
+    
+
 }
