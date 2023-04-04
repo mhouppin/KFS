@@ -6,6 +6,7 @@
 #include <kernel/vga_tty.h>
 
 #include "vga.h"
+#include "port.h"
 
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
@@ -28,6 +29,7 @@ void vga_init(void)
 			_vga_buffer[index] = vga_entry(' ', _vga_color);
 		}
 	}
+    vga_cursor_enable();
 }
  
 void vga_setcolor(uint8_t color) 
@@ -65,6 +67,7 @@ void vga_write(char c)
     }
     else
         vga_write_raw(c);
+    vga_cursor_update();
 }
 
 void vga_write_raw(char c)
@@ -92,4 +95,31 @@ void vga_writebuf(const void* data, size_t size)
 void vga_writestr(const char* data) 
 {
     vga_writebuf(data, strlen(data));
+}
+
+void vga_cursor_enable()
+{
+    port_out_u8(VGA_PORT_COMMAND, VGA_COMMAND_TEXT_CURSOR_START);
+    port_out_u8(VGA_PORT_DATA, (port_in_u8(VGA_PORT_DATA) & 0xC0) | 0x0E); // 0x0E = 14 = 1110
+
+    port_out_u8(VGA_PORT_COMMAND, VGA_COMMAND_TEXT_CURSOR_END);
+    port_out_u8(VGA_PORT_DATA, (port_in_u8(VGA_PORT_DATA) & 0xE0) | 0x0F); // 0x0F = 15 = 1111
+}
+
+void vga_cursor_disable()
+{
+    port_out_u8(VGA_PORT_COMMAND, VGA_COMMAND_TEXT_CURSOR_START);
+    port_out_u8(VGA_PORT_DATA, 0x20); // 0x20 = 32 = 0010 0000 Disable cursor
+}
+
+void vga_cursor_update()
+{
+    size_t position = _vga_row * VGA_WIDTH + _vga_column;
+
+    // Send cursor location to VGA controller the coordinates are 16 bits but we send them as one bytes at a time.
+    port_out_u8(VGA_PORT_COMMAND, VGA_COMMAND_TEXT_CURSOR_LOCATION_LOW);
+    port_out_u8(VGA_PORT_DATA, (unsigned char)(position & 0xFF));
+
+    port_out_u8(VGA_PORT_COMMAND, VGA_COMMAND_TEXT_CURSOR_LOCATION_HIGH);
+    port_out_u8(VGA_PORT_DATA, (unsigned char)((position >> 8) & 0xFF));
 }
