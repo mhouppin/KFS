@@ -14,4 +14,5 @@ void kernel_main(void)
         __VAULT_MINOR_VER,
         __VAULT_PATCH_VER,
         __VAULT_PRERELEASE_VER);
+    printf("%d", 42);
 }
