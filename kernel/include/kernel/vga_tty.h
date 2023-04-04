@@ -31,6 +31,7 @@ void vga_write_raw(char c);
 void vga_write(char c);
 void vga_writebuf(const void *buf, size_t size);
 void vga_writestr(const char *data);
+void vga_scroll();
 
 static inline uint8_t vga_entry_color(enum vga_color fg, enum vga_color bg) {
     return fg | bg << 4;

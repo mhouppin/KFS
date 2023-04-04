@@ -27,6 +27,35 @@ void kernel_main(void)
         vga_setcolor(vga_entry_color(i, 0));
         printf("H");
     }
-    
+    printf("\n");
 
+    // Test character input
+    printf("\\n : \n");
+    printf("\\r : \r");
+    printf("\\t : \t");
+    printf("\\b : \b");
+    // printf("\\f : \f");
+    printf("\\v : \v");
+
+    // Test scrolling
+    for (size_t i = 0; i < 10; i++)
+    {
+        printf("Scrolling test %d\n", i);
+    }
+    printf("Scrolling test 10");
+
+
+    // vga_setcolor(vga_entry_color(0, 7));
+    // printf("\r");
+    // for (size_t i = 0; i < (80*25); i++)
+    // {
+    //     printf(" ");
+    // }
+
+//     for (size_t i = 0; i < 80; i++)
+//     {
+//         printf("\td");
+//         if (i % 3 == 0)
+//             printf("e");
+//     }
 }

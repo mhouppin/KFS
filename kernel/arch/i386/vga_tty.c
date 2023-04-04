@@ -17,11 +17,13 @@ static size_t _vga_column;
 static uint8_t _vga_color;
 static uint16_t *_vga_buffer;
 
+#define VGA_DEFAULT_COLOR vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK)
+
 void vga_init(void)
 {
 	_vga_row = 0;
 	_vga_column = 0;
-	_vga_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
+	_vga_color = VGA_DEFAULT_COLOR;
 	_vga_buffer = VGA_MEMORY;
 	for (size_t y = 0; y < VGA_HEIGHT; y++) {
 		for (size_t x = 0; x < VGA_WIDTH; x++) {
@@ -43,7 +45,7 @@ void vga_write(char c)
     {
         _vga_column = 0;
         if (++_vga_row == VGA_HEIGHT)
-            _vga_row = 0;
+            vga_scroll();
     }
     else if (c == '\r')
     {
@@ -51,23 +53,55 @@ void vga_write(char c)
     }
     else if (c == '\t')
     {
-        _vga_column = (_vga_column + 7) & -8;
+        _vga_column += 4 - (_vga_column % 4);
 
-        if (_vga_column == VGA_WIDTH)
+        if (_vga_column >= VGA_WIDTH)
         {
             _vga_column = 0;
             if (++_vga_row == VGA_HEIGHT)
-                _vga_row = 0;
+                vga_scroll();
         }
+    }
+    else if (c == '\b')
+    {
+        if (_vga_column > 0)
+            _vga_column--;
+        else if (_vga_row > 0)
+        {
+            _vga_column = VGA_WIDTH - 1;
+            _vga_row--;
+        }
+    }
+    else if (c == '\f')
+    {
+        _vga_column = 0;
+        _vga_row = 0;
+        memset(
+            _vga_buffer,
+            0,
+            VGA_WIDTH * VGA_HEIGHT * sizeof(uint16_t)
+        );
     }
     else if (c == '\v')
     {
         if (++_vga_row == VGA_HEIGHT)
-            _vga_row = 0;
+            vga_scroll();
     }
     else
         vga_write_raw(c);
     vga_cursor_update();
+}
+
+void vga_scroll()
+{
+    if (_vga_row > 0)
+        _vga_row--;
+    memcpy(_vga_buffer, _vga_buffer + VGA_WIDTH, VGA_WIDTH * (VGA_HEIGHT - 1) * sizeof(uint16_t));
+    memset(
+        _vga_buffer + VGA_WIDTH * (VGA_HEIGHT - 1),
+        0,
+        VGA_WIDTH * sizeof(uint16_t)
+    );
 }
 
 void vga_write_raw(char c)
@@ -76,8 +110,8 @@ void vga_write_raw(char c)
 	if (++_vga_column == VGA_WIDTH) {
 		_vga_column = 0;
 		if (++_vga_row == VGA_HEIGHT)
-			_vga_row = 0;
-	}
+			vga_scroll();
+    }
 }
  
 void vga_write_raw_pos(char c, uint8_t color, size_t x, size_t y) 
