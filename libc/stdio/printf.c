@@ -27,6 +27,31 @@ static const char *static_itoa(int value)
     return (const char *)&buffer[i];
 }
 
+static const char *static_uint_to_base(unsigned int uvalue, const char *base_charset)
+{
+    static unsigned char buffer[32] = {0};
+
+    if (base_charset == NULL || base_charset[0] == '\0' || base_charset[1] == '\0')
+        return NULL;
+
+    const int base = strlen(base_charset);
+    
+    int i = 31;
+
+    while (1)
+    {
+        buffer[i] = base_charset[uvalue % base];
+        uvalue /= base;
+
+        if (uvalue == 0)
+            break ;
+
+        --i;
+    }
+
+    return (const char *)&buffer[i];
+}
+
 static bool try_print(const char *data, size_t size)
 {
     const unsigned char *bytes = (const unsigned char *)data;
@@ -115,6 +140,24 @@ int printf(const char *restrict format, ...)
             ++format;
 
             const char *str = static_itoa(va_arg(ap, int));
+            size_t len = strnlen(str, max_write + 1);
+
+            if (max_write < len)
+            {
+                // TODO: set errno to EOVERFLOW.
+                return -1;
+            }
+
+            if (!try_print(str, len))
+                return -1;
+
+            ret += len;
+        }
+        else if (*format == 'x')
+        {
+            ++format;
+
+            const char *str = static_uint_to_base(va_arg(ap, int), "0123456789abcdef");	
             size_t len = strnlen(str, max_write + 1);
 
             if (max_write < len)
