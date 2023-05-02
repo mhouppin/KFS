@@ -124,14 +124,9 @@ void gdt_init(void)
     kprint_memory(segments, 64);
 
     gdt_configure(segments, 8);
+
     // Print kernel stack segment.
-    register void    *esp asm("esp");
-    printf("Kernel stack segment: 0x%x\n", esp);
-    kprint_memory(esp - 8 , 64);
-}
-
-void  *get_kernel_stack_segment()
-{
-
-
+    void *esp asm("esp");
+    printf("Kernel stack segment: %p\n", esp);
+    kprint_memory(esp, 64);
 }

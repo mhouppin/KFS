@@ -6,7 +6,7 @@
 
 void kernel_main(void)
 {
-	vga_init();
+    vga_init();
     printf("[LOG] Initializing GDT segments...\n");
     gdt_init();
     printf("\nHello, World!\n\nWelcome to VaultOS %d.%d.%d%s\n",
@@ -43,19 +43,4 @@ void kernel_main(void)
         printf("Scrolling test %d\n", i);
     }
     printf("Scrolling test 10");
-
-
-    // vga_setcolor(vga_entry_color(0, 7));
-    // printf("\r");
-    // for (size_t i = 0; i < (80*25); i++)
-    // {
-    //     printf(" ");
-    // }
-
-//     for (size_t i = 0; i < 80; i++)
-//     {
-//         printf("\td");
-//         if (i % 3 == 0)
-//             printf("e");
-//     }
 }

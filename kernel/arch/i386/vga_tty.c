@@ -21,22 +21,22 @@ static uint16_t *_vga_buffer;
 
 void vga_init(void)
 {
-	_vga_row = 0;
-	_vga_column = 0;
-	_vga_color = VGA_DEFAULT_COLOR;
-	_vga_buffer = VGA_MEMORY;
-	for (size_t y = 0; y < VGA_HEIGHT; y++) {
-		for (size_t x = 0; x < VGA_WIDTH; x++) {
-			const size_t index = y * VGA_WIDTH + x;
-			_vga_buffer[index] = vga_entry(' ', _vga_color);
-		}
-	}
+    _vga_row = 0;
+    _vga_column = 0;
+    _vga_color = VGA_DEFAULT_COLOR;
+    _vga_buffer = VGA_MEMORY;
+    for (size_t y = 0; y < VGA_HEIGHT; y++) {
+        for (size_t x = 0; x < VGA_WIDTH; x++) {
+            const size_t index = y * VGA_WIDTH + x;
+            _vga_buffer[index] = vga_entry(' ', _vga_color);
+        }
+    }
     vga_cursor_enable();
 }
- 
+
 void vga_setcolor(uint8_t color) 
 {
-	_vga_color = color;
+    _vga_color = color;
 }
 
 void vga_write(char c)
@@ -53,7 +53,7 @@ void vga_write(char c)
     }
     else if (c == '\t')
     {
-        _vga_column += 4 - (_vga_column % 4);
+        _vga_column += 8 - (_vga_column % 8);
 
         if (_vga_column >= VGA_WIDTH)
         {
@@ -77,10 +77,10 @@ void vga_write(char c)
         _vga_column = 0;
         _vga_row = 0;
         memset(
-            _vga_buffer,
-            0,
-            VGA_WIDTH * VGA_HEIGHT * sizeof(uint16_t)
-        );
+                _vga_buffer,
+                0,
+                VGA_WIDTH * VGA_HEIGHT * sizeof(uint16_t)
+              );
     }
     else if (c == '\v')
     {
@@ -98,32 +98,32 @@ void vga_scroll()
         _vga_row--;
     memcpy(_vga_buffer, _vga_buffer + VGA_WIDTH, VGA_WIDTH * (VGA_HEIGHT - 1) * sizeof(uint16_t));
     memset(
-        _vga_buffer + VGA_WIDTH * (VGA_HEIGHT - 1),
-        0,
-        VGA_WIDTH * sizeof(uint16_t)
-    );
+            _vga_buffer + VGA_WIDTH * (VGA_HEIGHT - 1),
+            0,
+            VGA_WIDTH * sizeof(uint16_t)
+          );
 }
 
 void vga_write_raw(char c)
 {
-	vga_write_raw_pos(c, _vga_color, _vga_column, _vga_row);
-	if (++_vga_column == VGA_WIDTH) {
-		_vga_column = 0;
-		if (++_vga_row == VGA_HEIGHT)
-			vga_scroll();
+    vga_write_raw_pos(c, _vga_color, _vga_column, _vga_row);
+    if (++_vga_column == VGA_WIDTH) {
+        _vga_column = 0;
+        if (++_vga_row == VGA_HEIGHT)
+            vga_scroll();
     }
 }
- 
+
 void vga_write_raw_pos(char c, uint8_t color, size_t x, size_t y) 
 {
-	const size_t index = y * VGA_WIDTH + x;
-	_vga_buffer[index] = vga_entry(c, color);
+    const size_t index = y * VGA_WIDTH + x;
+    _vga_buffer[index] = vga_entry(c, color);
 }
- 
+
 void vga_writebuf(const void* data, size_t size) 
 {
-	for (size_t i = 0; i < size; i++)
-		vga_write(((const char *)data)[i]);
+    for (size_t i = 0; i < size; i++)
+        vga_write(((const char *)data)[i]);
 }
 
 void vga_writestr(const char* data) 
