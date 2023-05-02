@@ -36,11 +36,4 @@ void kernel_main(void)
     printf("\\b : \b");
     // printf("\\f : \f");
     printf("\\v : \v");
-
-    // Test scrolling
-    for (size_t i = 0; i < 10; i++)
-    {
-        printf("Scrolling test %d\n", i);
-    }
-    printf("Scrolling test 10");
 }
